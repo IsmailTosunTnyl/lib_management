@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 // import cloud_firestore plugin
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'package:lib_management/widgets/book-page.dart';
 import 'firebase_options.dart';
 import 'package:lib_management/widgets/book.dart';
+import 'package:lib_management/widgets/login.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -86,82 +87,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  final Stream<QuerySnapshot> _testStream =
-      FirebaseFirestore.instance.collection('Test').snapshots();
-
-  final Stream<QuerySnapshot> _booksStream =
-      FirebaseFirestore.instance.collection('Books').snapshots();
-
-  void _incrementCounter() {
-    setState(() {
-      FirebaseFirestore.instance.collection('Books').doc("1984").set({
-        "author": "George Orwell",
-        "available": 3,
-        "image":
-            "https://i.dr.com.tr/cache/500x400-0/originals/0000000064038-1.jpg",
-        "name": "1984",
-        "publisher": "Can Yayınları"
-      });
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
       body: Center(
-        child: StreamBuilder<QuerySnapshot>(
-          stream: _booksStream,
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.hasError) {
-              return const Text('Something went wrong');
-            }
-
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Text("Loading");
-            }
-
-            return Column(
-              children: [
-                SizedBox(
-                  height: 600,
-                  child: GridView(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 0.7,
-                    ),
-                    children:
-                        snapshot.data!.docs.map((DocumentSnapshot document) {
-                      final Map<String, dynamic> data =
-                          document.data()! as Map<String, dynamic>;
-
-                      return BookWidget(
-                        book: Book(
-                            title: data['name'],
-                            author: data['author'],
-                            publisher: data['publisher'],
-                            booksAvailable: data['available'],
-                            image: data['image']),
-                      );
-                    }).toList(),
-                  ),
-                ),
-              ],
-            );
-          },
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+          child: ElevatedButton(
+        child: Text("ss"),
+        onPressed: () => Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const LoginBodyScreen())),
+      )),
     );
   }
 }

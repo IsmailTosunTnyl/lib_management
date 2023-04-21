@@ -37,6 +37,11 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_core: ^2.9.0
   cloud_firestore: ^4.5.1
+  flutter_native_splash: ^2.2.19
+  email_validator: ^2.1.17
+  firebase_auth: ^4.4.2
+  google_fonts: ^4.0.3
+  hexcolor: ^3.0.1
 
 dev_dependencies:
   flutter_test:
@@ -61,9 +66,9 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-assets:
-  - assets/placeholderbook.webp
-  - images/placeholderbook.png
+  assets:
+    - assets/Images/
+    - assets/Images/plants2.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
