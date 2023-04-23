@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 // import cloud_firestore plugin
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:lib_management/firebase_options.dart';
 import 'package:lib_management/widgets/book.dart';
-
-
 
 class BookPage extends StatefulWidget {
   const BookPage({super.key});
@@ -79,14 +78,50 @@ class BooksPage extends StatefulWidget {
 
 class _BooksPageState extends State<BooksPage> {
   int _counter = 0;
+  FirebaseAuth auth = FirebaseAuth.instance;
+
   final Stream<QuerySnapshot> _testStream =
       FirebaseFirestore.instance.collection('Test').snapshots();
 
   final Stream<QuerySnapshot> _booksStream =
       FirebaseFirestore.instance.collection('Books').snapshots();
 
-  void _incrementCounter() {
+  void  _incrementCounter() {
     setState(() {
+      await var b = FirebaseFirestore.instance
+          .collection('Users')
+          .doc(auth.currentUser!.uid)
+          .collection("booksinuse")
+          .snapshots(); // get bookinuse array
+
+      // get bookinuse array
+
+      // create booksinuse: [DocumentReference<Map<String, dynamic>>(Books/1984), read this booksinuse array
+
+      // add book to booksinuse array
+      /*b.update({
+        "booksinuse": FieldValue.arrayUnion(
+            [FirebaseFirestore.instance.collection('Books').doc("1984")])
+      });*/
+      getData() async {
+        // initialize your list here
+        var items = List<dynamic>();
+
+        await databaseReference
+            .collection("app")
+            .doc('usr')
+            .collection(_id)
+            .get()
+            .then((QuerySnapshot snapshot) {
+          snapshot.docs.forEach(
+            // add data to your list
+            (f) => items.add(f.data()),
+          );
+        });
+        return items;
+      }
+
+      /*
       FirebaseFirestore.instance.collection('Books').doc("1984").set({
         "author": "George Orwell",
         "available": 3,
@@ -94,7 +129,7 @@ class _BooksPageState extends State<BooksPage> {
             "https://i.dr.com.tr/cache/500x400-0/originals/0000000064038-1.jpg",
         "name": "1984",
         "publisher": "Can Yayınları"
-      });
+      });*/
       _counter++;
     });
   }
