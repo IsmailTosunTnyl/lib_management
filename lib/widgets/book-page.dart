@@ -86,41 +86,32 @@ class _BooksPageState extends State<BooksPage> {
   final Stream<QuerySnapshot> _booksStream =
       FirebaseFirestore.instance.collection('Books').snapshots();
 
-  void  _incrementCounter() {
-    setState(() {
-      await var b = FirebaseFirestore.instance
-          .collection('Users')
-          .doc(auth.currentUser!.uid)
-          .collection("booksinuse")
-          .snapshots(); // get bookinuse array
+  void _incrementCounter() async {
+    var userref = FirebaseFirestore.instance
+        .collection('Users')
+        .doc(auth.currentUser!.uid);
+    print(userref);
+    var user = await userref.get();
+    var books = user.data()!['booksinuse'];
+    books.add(FirebaseFirestore.instance.collection('Books').doc("1984"));
+    userref.update({'booksinuse': books});
+    books.forEach((element) async {
+      var x = await element.get();
+      print(x.data());
+    });
 
-      // get bookinuse array
-
-      // create booksinuse: [DocumentReference<Map<String, dynamic>>(Books/1984), read this booksinuse array
-
-      // add book to booksinuse array
-      /*b.update({
-        "booksinuse": FieldValue.arrayUnion(
-            [FirebaseFirestore.instance.collection('Books').doc("1984")])
-      });*/
-      getData() async {
-        // initialize your list here
-        var items = List<dynamic>();
-
-        await databaseReference
-            .collection("app")
-            .doc('usr')
-            .collection(_id)
-            .get()
-            .then((QuerySnapshot snapshot) {
-          snapshot.docs.forEach(
-            // add data to your list
-            (f) => items.add(f.data()),
-          );
-        });
-        return items;
+    FirebaseFirestore.instance
+        .collection('Users')
+        .doc(auth.currentUser!.uid)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        Object? data = documentSnapshot.data();
+      } else {
+        print('Document does not exist on the database');
       }
-
+    });
+    setState(() {
       /*
       FirebaseFirestore.instance.collection('Books').doc("1984").set({
         "author": "George Orwell",
