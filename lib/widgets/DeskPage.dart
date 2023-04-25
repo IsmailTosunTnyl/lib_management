@@ -20,28 +20,27 @@ class _DeskPageState extends State<DeskPage> {
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context);
     return Center(
+      child: Container(
         child: StreamBuilder(
-            stream: widget._desksStream,
-            builder:
-                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (snapshot.hasError) {
-                return const Center(child: Text('Something went wrong'));
-              }
+          stream: widget._desksStream,
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return const Center(child: Text('Something went wrong'));
+            }
 
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator();
-              }
-
-              return Column(
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            }
+            return SingleChildScrollView(
+              child: Column(
                 children: [
                   Container(
-                    height: mediaQuery.size.height,
+                    height: MediaQuery.of(context).size.height,
                     padding: const EdgeInsets.all(5),
                     child: GridView(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount:
-                            (mediaQuery.size.width / 170).truncate(),
-                        childAspectRatio: 1.3,
+                        crossAxisCount: 3,
+                        childAspectRatio: 0.9,
                       ),
                       children:
                           snapshot.data!.docs.map((DocumentSnapshot document) {
@@ -49,13 +48,21 @@ class _DeskPageState extends State<DeskPage> {
                             document.data()! as Map<String, dynamic>;
 
                         return DeskWidget(
-                          desk: Desk.fromJson(data),
+                          desk: Desk(
+                              deskID: data['deskID'],
+                              isAvailable: data['isAvailable'],
+                              isUserHere: data['isUserHere'],
+                              usersQueue: data['usersQueue']),
                         );
                       }).toList(),
                     ),
                   ),
                 ],
-              );
-            }));
+              ),
+            );
+          },
+        ),
+      ),
+    );
   }
 }

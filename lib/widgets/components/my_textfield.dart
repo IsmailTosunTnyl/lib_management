@@ -10,8 +10,6 @@ class MyTextField extends StatelessWidget {
   final bool obscureText;
   final Icon prefixIcon;
   final Function()? onChanged;
-  
-  final  onSubmitted;
 
   const MyTextField(
       {super.key,
@@ -19,13 +17,11 @@ class MyTextField extends StatelessWidget {
       required this.hintText,
       required this.obscureText,
       required this.prefixIcon,
-      required this.onSubmitted,
       this.onChanged});
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-      onSubmitted: onSubmitted,
       controller: controller,
       obscureText: obscureText,
       cursorColor: HexColor("#4f4f4f"),
