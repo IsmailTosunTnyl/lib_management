@@ -6,8 +6,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:lib_management/widgets/MainDrawer.dart';
 import 'bookPage.dart';
-import 'package:lib_management/firebase_options.dart';
-import 'package:lib_management/model/book.dart';
+import 'package:lib_management/model/desk.dart';
+import 'package:lib_management/widgets/DeskPage.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -140,7 +140,10 @@ class _MainsPageContentState extends State<MainsPageContent> {
         title: Text(widget.title),
       ),
       drawer: MainDrawer(PageChange: PageChange),
-      body: _page == "BookPage" ? BookPage() : Text(_page),
+      body: _page == "BookPage"
+          ? BookPage()
+          : DeskPage(),
+            
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
