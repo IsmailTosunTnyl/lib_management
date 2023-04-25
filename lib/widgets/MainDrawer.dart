@@ -44,7 +44,7 @@ class _MainDrawerState extends State<MainDrawer> {
                   end: Alignment.bottomRight,
                   colors: [
                     Colors.blue,
-                    Color.fromARGB(255, 110, 123, 147),
+                    Color.fromARGB(255, 3, 164, 97),
                   ],
                 ),
               ),
