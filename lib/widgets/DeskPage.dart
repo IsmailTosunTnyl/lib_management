@@ -5,7 +5,7 @@ import '../model/desk.dart';
 
 class DeskPage extends StatefulWidget {
   BuildContext context;
-  DeskPage({Key? key,required this.context}) : super(key: key);
+  DeskPage({Key? key, required this.context}) : super(key: key);
 
   final Stream<QuerySnapshot> _desksStream =
       FirebaseFirestore.instance.collection('Desks').snapshots();
@@ -16,7 +16,6 @@ class DeskPage extends StatefulWidget {
 }
 
 class _DeskPageState extends State<DeskPage> {
-  
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context);
@@ -26,11 +25,11 @@ class _DeskPageState extends State<DeskPage> {
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasError) {
-                return const Text('Something went wrong');
+                return const Center(child: Text('Something went wrong'));
               }
 
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Text("Loading");
+                return const CircularProgressIndicator();
               }
 
               return Column(
@@ -39,10 +38,10 @@ class _DeskPageState extends State<DeskPage> {
                     height: mediaQuery.size.height,
                     padding: const EdgeInsets.all(5),
                     child: GridView(
-                      gridDelegate:
-                           SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount:(mediaQuery.size.width / 170).truncate() ,
-                        childAspectRatio: 0.5,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount:
+                            (mediaQuery.size.width / 170).truncate(),
+                        childAspectRatio: 1.3,
                       ),
                       children:
                           snapshot.data!.docs.map((DocumentSnapshot document) {

@@ -24,11 +24,11 @@ class _BookPageState extends State<BookPage> {
         stream: widget._booksStream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
-            return const Text('Something went wrong');
+            return const Center(child:  Text('Something went wrong'));
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Text("Loading");
+            return const CircularProgressIndicator();;
           }
 
           return Column(
@@ -39,7 +39,7 @@ class _BookPageState extends State<BookPage> {
                 child: GridView(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: (mediaQuery.size.width / 170).truncate(),
-                    childAspectRatio: 0.7,
+                    childAspectRatio: 0.6,
                   ),
                   children:
                       snapshot.data!.docs.map((DocumentSnapshot document) {

@@ -171,7 +171,7 @@ class _BookWidgetState extends State<BookWidget> {
           ),
           elevation: 10,
           child: Container(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(5),
               margin: const EdgeInsets.all(10),
               height: deviceWidth * 0.63,
               width: 50,

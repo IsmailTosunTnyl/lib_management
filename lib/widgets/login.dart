@@ -118,6 +118,8 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
                                     height: 10,
                                   ),
                                   MyTextField(
+                                    onSubmitted: () {
+                                    },
                                     onChanged: (() {
                                       validateEmail(emailController.text);
                                     }),
@@ -125,7 +127,6 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
                                     hintText: "hello@gmail.com",
                                     obscureText: false,
                                     prefixIcon: const Icon(Icons.mail_outline),
-                                    
                                   ),
                                   Padding(
                                     padding:
@@ -152,6 +153,7 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
                                     height: 10,
                                   ),
                                   MyTextField(
+                                    onSubmitted: signUserIn,
                                     controller: passwordController,
                                     hintText: "**************",
                                     obscureText: true,
