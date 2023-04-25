@@ -4,18 +4,19 @@ import 'package:firebase_core/firebase_core.dart';
 // import cloud_firestore plugin
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:lib_management/widgets/MainDrawer.dart';
+import 'bookPage.dart';
 import 'package:lib_management/firebase_options.dart';
-import 'package:lib_management/widgets/book.dart';
+import 'package:lib_management/model/book.dart';
 
-class BookPage extends StatefulWidget {
-  const BookPage({super.key});
+class MainPage extends StatefulWidget {
+  const MainPage({super.key});
 
   @override
-  State<BookPage> createState() => _BookPageState();
+  State<MainPage> createState() => _MainPageState();
 }
 
-class _BookPageState extends State<BookPage> {
+class _MainPageState extends State<MainPage> {
   // This widget is the root of your application.
 
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
@@ -47,7 +48,7 @@ class _BookPageState extends State<BookPage> {
 
           // Once complete, show your application
           if (snapshot.connectionState == ConnectionState.done) {
-            return const BooksPage(title: 'Flutter Demo Home Page');
+            return const MainsPageContent(title: 'Flutter Demo Home Page');
           }
 
           // Otherwise, show something whilst waiting for initialization to complete
@@ -58,8 +59,8 @@ class _BookPageState extends State<BookPage> {
   }
 }
 
-class BooksPage extends StatefulWidget {
-  const BooksPage({super.key, required this.title});
+class MainsPageContent extends StatefulWidget {
+  const MainsPageContent({super.key, required this.title});
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -73,11 +74,12 @@ class BooksPage extends StatefulWidget {
   final String title;
 
   @override
-  State<BooksPage> createState() => _BooksPageState();
+  State<MainsPageContent> createState() => _MainsPageContentState();
 }
 
-class _BooksPageState extends State<BooksPage> {
+class _MainsPageContentState extends State<MainsPageContent> {
   int _counter = 0;
+  String _page = "BookPage";
   FirebaseAuth auth = FirebaseAuth.instance;
 
   final Stream<QuerySnapshot> _testStream =
@@ -90,7 +92,7 @@ class _BooksPageState extends State<BooksPage> {
     var userref = FirebaseFirestore.instance
         .collection('Users')
         .doc(auth.currentUser!.uid);
-    print(userref);
+
     var user = await userref.get();
     var books = user.data()!['booksinuse'];
     books.add(FirebaseFirestore.instance.collection('Books').doc("1984"));
@@ -125,56 +127,20 @@ class _BooksPageState extends State<BooksPage> {
     });
   }
 
+  void PageChange(String page) {
+    setState(() {
+      _page = page;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: StreamBuilder<QuerySnapshot>(
-          stream: _booksStream,
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.hasError) {
-              return const Text('Something went wrong');
-            }
-
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Text("Loading");
-            }
-
-            return Column(
-              children: [
-                SizedBox(
-                  height: 600,
-                  child: GridView(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 0.7,
-                    ),
-                    children:
-                        snapshot.data!.docs.map((DocumentSnapshot document) {
-                      final Map<String, dynamic> data =
-                          document.data()! as Map<String, dynamic>;
-
-                      return BookWidget(
-                        book: Book(
-                            title: data['name'],
-                            author: data['author'],
-                            publisher: data['publisher'],
-                            booksAvailable: data['available'],
-                            image: data['image']),
-                      );
-                    }).toList(),
-                  ),
-                ),
-              ],
-            );
-          },
-        ),
-      ),
+      drawer: MainDrawer(PageChange: PageChange),
+      body: _page == "BookPage" ? BookPage() : Text(_page),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',

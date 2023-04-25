@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 // import cloud_firestore plugin
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:lib_management/widgets/book-page.dart';
+import 'package:lib_management/widgets/MainPage.dart';
 import 'firebase_options.dart';
-import 'package:lib_management/widgets/book.dart';
+import 'package:lib_management/model/book.dart';
 import 'package:lib_management/widgets/login.dart';
 
 void main() async {

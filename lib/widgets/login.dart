@@ -6,7 +6,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:lib_management/widgets/components/my_button.dart';
 import 'package:lib_management/widgets/components/my_textfield.dart';
 
-import 'book-page.dart';
+import 'MainPage.dart';
 
 class LoginBodyScreen extends StatefulWidget {
   const LoginBodyScreen({super.key});
@@ -25,7 +25,7 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
       print(FirebaseAuth.instance.currentUser!.uid);
       // ignore: use_build_context_synchronously
       Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return const BookPage();
+        return const MainPage();
       }));
     } on FirebaseAuthException catch (e) {
       showErrorMessage(e.code);
