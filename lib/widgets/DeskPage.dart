@@ -33,7 +33,7 @@ class _DeskPageState extends State<DeskPage> {
               return Column(
                 children: [
                   SizedBox(
-                    
+                    height: 100,
                     child: GridView(
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
