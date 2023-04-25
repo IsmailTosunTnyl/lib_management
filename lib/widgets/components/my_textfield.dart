@@ -22,6 +22,7 @@ class MyTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      
       controller: controller,
       obscureText: obscureText,
       cursorColor: HexColor("#4f4f4f"),

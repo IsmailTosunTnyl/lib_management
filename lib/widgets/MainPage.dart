@@ -137,12 +137,13 @@ class _MainsPageContentState extends State<MainsPageContent> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(54, 33, 149, 243),
         title: Text(widget.title),
       ),
       drawer: MainDrawer(PageChange: PageChange),
       body: _page == "BookPage"
-          ? BookPage()
-          : DeskPage(),
+          ? BookPage(context: context,)
+          : DeskPage(context: context,),
             
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,

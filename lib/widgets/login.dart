@@ -125,6 +125,7 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
                                     hintText: "hello@gmail.com",
                                     obscureText: false,
                                     prefixIcon: const Icon(Icons.mail_outline),
+                                    
                                   ),
                                   Padding(
                                     padding:

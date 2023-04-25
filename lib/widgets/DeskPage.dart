@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import '../model/desk.dart';
 
 class DeskPage extends StatefulWidget {
-  DeskPage({Key? key}) : super(key: key);
+  BuildContext context;
+  DeskPage({Key? key,required this.context}) : super(key: key);
 
   final Stream<QuerySnapshot> _desksStream =
       FirebaseFirestore.instance.collection('Desks').snapshots();
@@ -15,8 +16,10 @@ class DeskPage extends StatefulWidget {
 }
 
 class _DeskPageState extends State<DeskPage> {
+  
   @override
   Widget build(BuildContext context) {
+    var mediaQuery = MediaQuery.of(context);
     return Center(
         child: StreamBuilder(
             stream: widget._desksStream,
@@ -32,13 +35,14 @@ class _DeskPageState extends State<DeskPage> {
 
               return Column(
                 children: [
-                  SizedBox(
-                    height: 100,
+                  Container(
+                    height: mediaQuery.size.height,
+                    padding: const EdgeInsets.all(5),
                     child: GridView(
                       gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        childAspectRatio: 0.7,
+                           SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount:(mediaQuery.size.width / 170).truncate() ,
+                        childAspectRatio: 0.5,
                       ),
                       children:
                           snapshot.data!.docs.map((DocumentSnapshot document) {

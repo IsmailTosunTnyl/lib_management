@@ -6,8 +6,8 @@ import 'package:lib_management/model/book.dart';
 class BookPage extends StatefulWidget {
   final Stream<QuerySnapshot> _booksStream =
       FirebaseFirestore.instance.collection('Books').snapshots();
-
- 
+  BuildContext context;
+  BookPage({Key? key, required this.context}) : super(key: key);
 
   @override
   State<BookPage> createState() => _BookPageState();
@@ -16,6 +16,9 @@ class BookPage extends StatefulWidget {
 class _BookPageState extends State<BookPage> {
   @override
   Widget build(BuildContext context) {
+    var mediaQuery = MediaQuery.of(context);
+    print((mediaQuery.size.width / 170).truncate());
+    print("******************************");
     return Center(
       child: StreamBuilder<QuerySnapshot>(
         stream: widget._booksStream,
@@ -30,11 +33,12 @@ class _BookPageState extends State<BookPage> {
 
           return Column(
             children: [
-              SizedBox(
-                height: 600,
+              Container(
+                height: MediaQuery.of(context).size.height,
+                padding: const EdgeInsets.all(5),
                 child: GridView(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: (mediaQuery.size.width / 170).truncate(),
                     childAspectRatio: 0.7,
                   ),
                   children:
