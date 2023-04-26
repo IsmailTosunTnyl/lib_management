@@ -7,8 +7,10 @@ class DeskPage extends StatefulWidget {
   BuildContext context;
   DeskPage({Key? key, required this.context}) : super(key: key);
 
-  final Stream<QuerySnapshot> _desksStream =
-      FirebaseFirestore.instance.collection('Desks').snapshots();
+  final Stream<QuerySnapshot> _desksStream = FirebaseFirestore.instance
+      .collection('Desks')
+      .orderBy("deskID")
+      .snapshots();
   @override
   State<StatefulWidget> createState() {
     return _DeskPageState();
