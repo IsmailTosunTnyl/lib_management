@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 /// Desk class for the desk object
 class Desk {
@@ -77,19 +78,51 @@ void _deskDetails(BuildContext context, Desk desk) async {
                 height: 10,
               ),
               Expanded(
+                  child: Column(children: [
+                Text(
+                  "Rezervations",
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                Expanded(
                   child: ListView.builder(
-                itemCount: rezervationsList.docs.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(rezervationsList.docs[index]
-                        .data()['endtime']
-                        .toString()),
-                    subtitle: Text(rezervationsList.docs[index]
-                        .data()['starttime']
-                        .toString()),
-                  );
-                },
-              ))
+                    itemCount: rezervationsList.docs.length,
+                    itemBuilder: (context, index) {
+                      DateTime startdatetime = (rezervationsList.docs[index]
+                              .data()['starttime'] as Timestamp)
+                          .toDate();
+                      DateTime enddatetime = (rezervationsList.docs[index]
+                              .data()['endtime'] as Timestamp)
+                          .toDate();
+                      String startDate =
+                          DateFormat('dd/MM/yyyy, HH:mm').format(startdatetime);
+                      String endDate =
+                          DateFormat('dd/MM/yyyy, HH:mm').format(enddatetime);
+                      // find duration of rezervation
+                      Duration duration = startdatetime.difference(enddatetime);
+
+                      return Card(
+                        child: Row(
+                          children: [
+                            Column(
+                              children: [
+                                Text("Start: $endDate"),
+                                Text("End: $startDate")
+                              ],
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Icon(Icons.timelapse, size: 30),
+                            Flexible(
+                                child: Text("${duration.inMinutes} minutes"))
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                )
+              ]))
               // show rezervations in a listview
             ]),
           ),
