@@ -142,13 +142,17 @@ class _MainsPageContentState extends State<MainsPageContent> {
       ),
       drawer: MainDrawer(PageChange: PageChange),
       body: _page == "BookPage"
-          ? BookPage(context: context,)
-          : DeskPage(context: context,),
-            
+          ? BookPage(
+              context: context,
+            )
+          : DeskPage(
+              context: context,
+            ),
+
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.replay),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

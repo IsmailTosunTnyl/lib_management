@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class Book {
   final String title;
@@ -23,6 +26,83 @@ class BookWidget extends StatefulWidget {
 
   @override
   State<BookWidget> createState() => _BookWidgetState();
+}
+
+void _getbook(BuildContext context, Book book) async {
+  final CollectionReference BookReservation =
+      FirebaseFirestore.instance.collection('BooksReservation');
+
+  var user = FirebaseFirestore.instance
+      .collection('Users')
+      .doc(FirebaseAuth.instance.currentUser!.uid);
+
+  var bookref = FirebaseFirestore.instance.collection('Books').doc(book.title);
+
+  void _alert(BuildContext context, String message, IconData icon, Color color,
+      String content) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(message),
+            icon: Icon(icon, color: color, size: 50),
+            content: Text(
+              content,
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w200),
+              textAlign: TextAlign.center,
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text("OK"))
+            ],
+          );
+        });
+  }
+  //if user dont have same book ib BooksReservation collection add it
+// Get a reference to the Firestore collection
+
+// Define the Firestore query
+  Query query = BookReservation.where('user', isEqualTo: user)
+      .where('book', isEqualTo: bookref);
+
+// Get a stream of QuerySnapshot objects
+  Future<QuerySnapshot> future = query.get();
+
+// Listen to the stream and get the number of documents
+  future.then((QuerySnapshot snapshot) {
+    int numberOfDocuments = snapshot.size;
+    print(numberOfDocuments);
+    if (numberOfDocuments == 0) {
+      DatePicker.showDatePicker(context,
+          showTitleActions: true,
+          minTime: DateTime.now(),
+          maxTime: DateTime.now().add(const Duration(days: 30)),
+          onConfirm: (date) {
+        print('confirm $date');
+
+        BookReservation.add({
+          'user': user,
+          'book': bookref,
+          'date': DateTime.now(),
+          'returnDate': date
+        });
+
+        bookref.update({'available': book.booksAvailable - 1});
+
+        _alert(context, "Book Reserved", Icons.check, Colors.green,
+            "You can take your book from library in 3 days");
+      }, currentTime: DateTime.now(), locale: LocaleType.tr);
+    } else {
+      _alert(context, "You Already Have Same Book", Icons.warning, Colors.red,
+          "You can only take one copy of the same book");
+      print("You already have this book");
+    }
+  });
+
+  // if user dont have same book ib BooksReservation collection add it
 }
 
 // open dialog for book details
@@ -118,9 +198,7 @@ void _openBookDetails(BuildContext context, Book book) {
                                   ),
                                 ),
                                 onPressed: () {
-                                  // Get Book TODO
-                                  print(book.title);
-                                  Navigator.pop(context);
+                                  _getbook(context, book);
                                 },
                                 child: const Text(
                                   "Get Book",
