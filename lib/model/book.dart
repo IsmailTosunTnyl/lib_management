@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:intl/intl.dart';
 
 class Book {
   final String title;
@@ -11,13 +12,15 @@ class Book {
   final String publisher;
   final int booksAvailable;
   final String image;
+  var availableDate;
 
   Book(
       {required this.title,
       required this.author,
       required this.publisher,
       required this.booksAvailable,
-      required this.image});
+      required this.image,
+      this.availableDate});
 }
 
 class BookWidget extends StatefulWidget {
@@ -208,13 +211,22 @@ void _openBookDetails(BuildContext context, Book book) {
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 20),
                                 ))
-                            : const Text(
-                                textAlign: TextAlign.center,
-                                "No Books Available",
-                                style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold),
+                            : Column(
+                                children: [
+                                  const Text(
+                                    textAlign: TextAlign.center,
+                                    "No Books Available ",
+                                    style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(
+                                    height: 4,
+                                  ),
+                                  Text("Avaliable date: " +
+                                      (DateFormat.yMMMd().format(book.availableDate)).toString())
+                                ],
                               )),
                   ),
                   Expanded(
@@ -329,7 +341,7 @@ class _BookWidgetState extends State<BookWidget> {
                                     color: Colors.green),
                               )
                             : const Text(
-                                'No books available',
+                                "No books available ",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontSize: 13,

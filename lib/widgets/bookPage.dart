@@ -6,6 +6,10 @@ import 'package:lib_management/model/book.dart';
 class BookPage extends StatefulWidget {
   final Stream<QuerySnapshot> _booksStream =
       FirebaseFirestore.instance.collection('Books').snapshots();
+
+  final Stream<QuerySnapshot> _booksReservationStream =
+      FirebaseFirestore.instance.collection('BooksReservation').orderBy("returnDate").snapshots();
+
   BuildContext context;
   BookPage({Key? key, required this.context}) : super(key: key);
 
@@ -36,39 +40,80 @@ class _BookPageState extends State<BookPage> {
 
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const CircularProgressIndicator();
-            
           }
+          return StreamBuilder<QuerySnapshot>(
+              stream: widget._booksReservationStream,
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot2) {
+                if (snapshot2.hasError) {
+                  return const Center(child: Text('Something went wrong'));
+                }
 
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                  height: MediaQuery.of(context).size.height,
-                  padding: const EdgeInsets.all(5),
-                  child: GridView(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: (mediaQuery.size.width / 170).truncate(),
-                      childAspectRatio: 0.6,
-                    ),
-                    children:
-                        snapshot.data!.docs.map((DocumentSnapshot document) {
-                      final Map<String, dynamic> data =
-                          document.data()! as Map<String, dynamic>;
+                if (snapshot2.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                }
+                return SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Container(
+                        height: MediaQuery.of(context).size.height,
+                        padding: const EdgeInsets.all(5),
+                        child: GridView(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount:
+                                (mediaQuery.size.width / 170).truncate(),
+                            childAspectRatio: 0.6,
+                          ),
+                          children: snapshot.data!.docs
+                              .map((DocumentSnapshot document) {
+                            final Map<String, dynamic> data =
+                                document.data()! as Map<String, dynamic>;
 
-                      return BookWidget(
-                        book: Book(
-                            title: data['name'],
-                            author: data['author'],
-                            publisher: data['publisher'],
-                            booksAvailable: data['available'],
-                            image: data['image']),
-                      );
-                    }).toList(),
+                            /*snapshot2.data!.docs.map((DocumentSnapshot doc) {
+                              final Map<String, dynamic> data2 =
+                                  doc.data()! as Map<String, dynamic>;
+                              if (data['name'] == data2['name']) {
+                                data['available'] = data['available'] - 1;
+                              }
+                            }).toList();*/
+
+                            var data2 = snapshot2.data!.docs;
+                            
+
+                            for (var rez in data2) {
+                              if (rez["book"] == document.reference) {
+                                
+                                
+                                return BookWidget(
+                              book: Book(
+                                  title: data['name'],
+                                  author: data['author'],
+                                  publisher: data['publisher'],
+                                  booksAvailable: data['available'],
+                                  image: data['image'],
+                                  availableDate: (rez['returnDate'] as Timestamp).toDate() ),
+                            );
+                            
+                              }
+                            }
+
+                            return BookWidget(
+                              book: Book(
+                                  title: data['name'],
+                                  author: data['author'],
+                                  publisher: data['publisher'],
+                                  booksAvailable: data['available'],
+                                  image: data['image'],
+                                  availableDate: null),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
-          );
+                );
+              });
         },
       ),
     );
