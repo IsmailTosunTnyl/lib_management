@@ -16,6 +16,13 @@ class BookPage extends StatefulWidget {
 class _BookPageState extends State<BookPage> {
   @override
   Widget build(BuildContext context) {
+    var booksReservation = FirebaseFirestore.instance
+        .collection('BooksReservation')
+        .limit(1)
+        .snapshots();
+
+    print(booksReservation);
+
     var mediaQuery = MediaQuery.of(context);
     print((mediaQuery.size.width / 170).truncate());
     print("******************************");
@@ -29,7 +36,7 @@ class _BookPageState extends State<BookPage> {
 
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const CircularProgressIndicator();
-            ;
+            
           }
 
           return SingleChildScrollView(

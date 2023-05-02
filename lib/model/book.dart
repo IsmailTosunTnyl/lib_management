@@ -137,12 +137,15 @@ void _openBookDetails(BuildContext context, Book book) {
                     child: Container(
                       margin: const EdgeInsets.all(10),
                       color: const Color.fromARGB(62, 120, 33, 141),
-                      child: Image.network(book.image, fit: BoxFit.fitWidth,
-                          errorBuilder: (BuildContext context, Object exception,
-                              StackTrace? stackTrace) {
-                        print(exception);
-                        return const Icon(Icons.book, size: 200);
-                      }),
+                      child: Hero(
+                        tag: book.title,
+                        child: Image.network(book.image, fit: BoxFit.fitWidth,
+                            errorBuilder: (BuildContext context,
+                                Object exception, StackTrace? stackTrace) {
+                          print(exception);
+                          return const Icon(Icons.book, size: 200);
+                        }),
+                      ),
                     ),
                   ),
                   Expanded(
@@ -264,18 +267,21 @@ class _BookWidgetState extends State<BookWidget> {
                       height: deviceWidth * 0.63 * 0.6,
                       width: double.infinity,
                       color: const Color.fromARGB(62, 120, 33, 141),
-                      child: Image.network(widget.book.image,
-                          fit: BoxFit.fitHeight, errorBuilder:
-                              (BuildContext context, Object exception,
-                                  StackTrace? stackTrace) {
-                        print(exception);
-                        return const Icon(Icons.book, size: 200);
-                      }),
+                      child: Hero(
+                        tag: widget.book.title,
+                        child: Image.network(widget.book.image,
+                            fit: BoxFit.fitHeight, errorBuilder:
+                                (BuildContext context, Object exception,
+                                    StackTrace? stackTrace) {
+                          print(exception);
+                          return const Icon(Icons.book, size: 200);
+                        }),
+                      ),
                     ),
                   ),
                   //title
                   Expanded(
-                    flex: 4,
+                    flex: 5,
                     child: Container(
                       width: double.infinity,
                       //color: Colors.green,
@@ -283,7 +289,7 @@ class _BookWidgetState extends State<BookWidget> {
                         widget.book.title,
                         textAlign: TextAlign.center,
                         style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
+                            fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
