@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+
 class MainDrawer extends StatefulWidget {
   final Function(String v) PageChange;
   MainDrawer({super.key, required this.PageChange});
@@ -83,6 +84,13 @@ class _MainDrawerState extends State<MainDrawer> {
               title: Text("Desk"),
               onTap: () {
                 widget.PageChange("DeskPage");
+                Navigator.pop(context);
+              }),
+          ListTile(
+              leading: Icon(Icons.adb_outlined),
+              title: Text("BookAI"),
+              onTap: () {
+                widget.PageChange("BookAIPage");
                 Navigator.pop(context);
               }),
         ],

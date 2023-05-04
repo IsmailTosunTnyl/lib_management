@@ -8,6 +8,7 @@ import 'package:lib_management/widgets/MainDrawer.dart';
 import 'bookPage.dart';
 import 'package:lib_management/model/desk.dart';
 import 'package:lib_management/widgets/DeskPage.dart';
+import 'package:lib_management/widgets/BookAIPage.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -145,9 +146,13 @@ class _MainsPageContentState extends State<MainsPageContent> {
           ? BookPage(
               context: context,
             )
-          : DeskPage(
-              context: context,
-            ),
+          : _page == "DeskPage"
+              ? DeskPage(
+                  context: context,
+                )
+              : BookAIPage(
+                  context: context,
+                ),
 
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
