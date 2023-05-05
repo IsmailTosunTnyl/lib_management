@@ -7,8 +7,11 @@ class BookPage extends StatefulWidget {
   final Stream<QuerySnapshot> _booksStream =
       FirebaseFirestore.instance.collection('Books').snapshots();
 
-  final Stream<QuerySnapshot> _booksReservationStream =
-      FirebaseFirestore.instance.collection('BooksReservation').orderBy("returnDate").snapshots();
+  final Stream<QuerySnapshot> _booksReservationStream = FirebaseFirestore
+      .instance
+      .collection('BooksReservation')
+      .orderBy("returnDate")
+      .snapshots();
 
   BuildContext context;
   BookPage({Key? key, required this.context}) : super(key: key);
@@ -25,9 +28,8 @@ class _BookPageState extends State<BookPage> {
         .limit(1)
         .snapshots();
 
-    print(booksReservation);
-
     var mediaQuery = MediaQuery.of(context);
+    print(mediaQuery.size.width);
     print((mediaQuery.size.width / 170).truncate());
     print("******************************");
     return Center(
@@ -63,7 +65,8 @@ class _BookPageState extends State<BookPage> {
                               SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount:
                                 (mediaQuery.size.width / 170).truncate(),
-                            childAspectRatio: 0.6,
+                            childAspectRatio:
+                                mediaQuery.size.width < 450 ? 0.7 : 0.5,
                           ),
                           children: snapshot.data!.docs
                               .map((DocumentSnapshot document) {
@@ -79,22 +82,20 @@ class _BookPageState extends State<BookPage> {
                             }).toList();*/
 
                             var data2 = snapshot2.data!.docs;
-                            
 
                             for (var rez in data2) {
                               if (rez["book"] == document.reference) {
-                                
-                                
                                 return BookWidget(
-                              book: Book(
-                                  title: data['name'],
-                                  author: data['author'],
-                                  publisher: data['publisher'],
-                                  booksAvailable: data['available'],
-                                  image: data['image'],
-                                  availableDate: (rez['returnDate'] as Timestamp).toDate() ),
-                            );
-                            
+                                  book: Book(
+                                      title: data['name'],
+                                      author: data['author'],
+                                      publisher: data['publisher'],
+                                      booksAvailable: data['available'],
+                                      image: data['image'],
+                                      availableDate:
+                                          (rez['returnDate'] as Timestamp)
+                                              .toDate()),
+                                );
                               }
                             }
 

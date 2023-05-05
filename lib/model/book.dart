@@ -225,7 +225,9 @@ void _openBookDetails(BuildContext context, Book book) {
                                     height: 4,
                                   ),
                                   Text("Avaliable date: " +
-                                      (DateFormat.yMMMd().format(book.availableDate)).toString())
+                                      (DateFormat.yMMMd()
+                                              .format(book.availableDate))
+                                          .toString())
                                 ],
                               )),
                   ),
@@ -286,7 +288,10 @@ class _BookWidgetState extends State<BookWidget> {
                                 (BuildContext context, Object exception,
                                     StackTrace? stackTrace) {
                           print(exception);
-                          return const Icon(Icons.book, size: 200);
+                          return Image.asset(
+                            "assets/Images/book.png",
+                            fit: BoxFit.fitHeight,
+                          );
                         }),
                       ),
                     ),

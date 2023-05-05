@@ -62,6 +62,20 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var mediaquery = MediaQuery.of(context);
+    // image offset
+    double offset;
+    if (mediaquery.size.width < 400) {
+      offset = -190;
+    } else if (mediaquery.size.width < 450) {
+      offset = -230;
+    } else if (mediaquery.size.width < 1000) {
+      offset = -400;
+    } else {
+      offset = -580;
+    }
+
+
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -118,7 +132,6 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
                                     height: 10,
                                   ),
                                   MyTextField(
-                                   
                                     onChanged: (() {
                                       validateEmail(emailController.text);
                                     }),
@@ -152,7 +165,6 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
                                     height: 10,
                                   ),
                                   MyTextField(
-                                    
                                     controller: passwordController,
                                     hintText: "**************",
                                     obscureText: true,
@@ -200,7 +212,8 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
                     ),
                     Transform.translate(
                       //offset: const Offset(0, -253),
-                      offset: const Offset(0, -253),
+
+                      offset: Offset(0, offset),
                       child: Image.asset(
                         'assets/Images/bookLogin.png',
                         scale: 1.5,
