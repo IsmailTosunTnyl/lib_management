@@ -298,7 +298,7 @@ class _BookWidgetState extends State<BookWidget> {
                   ),
                   //title
                   Expanded(
-                    flex: 5,
+                    flex: 6,
                     child: Container(
                       width: double.infinity,
                       //color: Colors.green,
@@ -311,11 +311,11 @@ class _BookWidgetState extends State<BookWidget> {
                     ),
                   ),
                   const SizedBox(
-                    height: 5,
+                    height: 2,
                   ),
                   //author
                   Expanded(
-                    flex: 3,
+                    flex: 5,
                     child: Container(
                       width: double.infinity,
                       //color: Colors.yellow,
@@ -328,7 +328,7 @@ class _BookWidgetState extends State<BookWidget> {
                     ),
                   ),
                   const SizedBox(
-                    height: 5,
+                    height: 4,
                   ),
                   // books available
                   Expanded(
@@ -355,7 +355,7 @@ class _BookWidgetState extends State<BookWidget> {
                               )),
                   ),
                   const SizedBox(
-                    height: 5,
+                    height: 4,
                   ),
                   // book seller
                   Expanded(

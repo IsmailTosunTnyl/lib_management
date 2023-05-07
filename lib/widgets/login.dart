@@ -72,9 +72,8 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
     } else if (mediaquery.size.width < 1000) {
       offset = -400;
     } else {
-      offset = -580;
+      offset = -600;
     }
-
 
     return SafeArea(
       child: Scaffold(

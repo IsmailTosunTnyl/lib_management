@@ -41,8 +41,10 @@ class _DeskPageState extends State<DeskPage> {
                     padding: const EdgeInsets.all(5),
                     child: GridView(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        childAspectRatio: 0.9,
+                        crossAxisCount: mediaQuery.size.width < 500
+                            ? 3
+                            : (mediaQuery.size.width / 150).truncate(),
+                        childAspectRatio: mediaQuery.size.width < 450 ? 1 : 1.1,
                       ),
                       children:
                           snapshot.data!.docs.map((DocumentSnapshot document) {
