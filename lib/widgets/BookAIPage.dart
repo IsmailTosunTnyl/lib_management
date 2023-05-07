@@ -20,7 +20,6 @@ class BookAIPage extends StatefulWidget {
   }
 }
 
-//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
 class _BookAIPageState extends State<BookAIPage> {
   final inputcontroller = TextEditingController();
   var isThinking = false;
@@ -160,67 +159,131 @@ class _BookAIPageState extends State<BookAIPage> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Center(
-          child: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height * 0.9,
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                Image.asset(
-                  'assets/Images/bookLogin.png',
-                  scale: 1.5,
-                  width: double.infinity,
-                ),
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  bottom: 80,
-                  child: MyTextField(
-                    controller: inputcontroller,
-                    hintText: "Describe what do you want to read",
-                    obscureText: false,
-                    prefixIcon: Icon(Icons.search),
-                  ),
-                ),
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  bottom: 20,
-                  child: isThinking
-                      ? CircularProgressIndicator()
-                      : OutlinedButton(
-                          style: ButtonStyle(
-                              elevation: MaterialStateProperty.all(10),
-                              shadowColor: MaterialStateColor.resolveWith(
-                                  (states) =>
-                                      Color.fromARGB(81, 33, 149, 243))),
-                          onPressed: () {
-                            _translateEngToThai(inputcontroller.text);
-                          },
-                          child: const Text("Search"),
+      child: MediaQuery.of(context).size.width < 450
+          ? Center(
+              child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.9,
+              child: Column(
+                children: [
+                  Stack(
+                    children: [
+                      Image.asset(
+                        'assets/Images/bookLogin.png',
+                        scale: 1.5,
+                        width: double.infinity,
+                      ),
+                      Positioned(
+                        left: 0,
+                        right: 0,
+                        bottom: 80,
+                        child: MyTextField(
+                          controller: inputcontroller,
+                          hintText: "Describe what do you want to read",
+                          obscureText: false,
+                          prefixIcon: Icon(Icons.search),
                         ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Expanded(
-              child: widgetList.isNotEmpty
-                  ? ListView(
-                      children: widgetList,
-                    )
-                  : Image.asset(
-                      'assets/Images/book.png',
-                      scale: 1.5,
-                      width: double.infinity,
+                      ),
+                      Positioned(
+                        left: 0,
+                        right: 0,
+                        bottom: 20,
+                        child: isThinking
+                            ? CircularProgressIndicator()
+                            : OutlinedButton(
+                                style: ButtonStyle(
+                                    elevation: MaterialStateProperty.all(10),
+                                    shadowColor: MaterialStateColor.resolveWith(
+                                        (states) =>
+                                            Color.fromARGB(81, 33, 149, 243))),
+                                onPressed: () {
+                                  _translateEngToThai(inputcontroller.text);
+                                },
+                                child: const Text("Search"),
+                              ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Expanded(
+                    child: widgetList.isNotEmpty
+                        ? ListView(
+                            children: widgetList,
+                          )
+                        : Image.asset(
+                            'assets/Images/book.png',
+                            scale: 1.5,
+                            width: double.infinity,
+                          ),
+                  )
+                ],
+              ),
+            ))
+          : Row(
+            children: [
+                Stack(
+                    children: [
+                      Image.asset(
+                        'assets/Images/bookLogin.png',
+                        scale: 1.5,
+                        width: MediaQuery.of(context).size.width * 0.4,
+                      ),
+                      Positioned(
+                        left: 0,
+                        right: 0,
+                        bottom: 80,
+                        child: MyTextField(
+                          controller: inputcontroller,
+                          hintText: "Describe what do you want to read",
+                          obscureText: false,
+                          prefixIcon: Icon(Icons.search),
+                        ),
+                      ),
+                      Positioned(
+                        left: 0,
+                        right: 0,
+                        bottom: 20,
+                        child: isThinking
+                            ? CircularProgressIndicator()
+                            : OutlinedButton(
+                                style: ButtonStyle(
+                                    elevation: MaterialStateProperty.all(10),
+                                    shadowColor: MaterialStateColor.resolveWith(
+                                        (states) =>
+                                            Color.fromARGB(81, 33, 149, 243))),
+                                onPressed: () {
+                                  _translateEngToThai(inputcontroller.text);
+                                },
+                                child: const Text("Search"),
+                              ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                   Container(
+                    width: 1000,
+                    height: 400,
+                    constraints: BoxConstraints(
+                     maxWidth: MediaQuery.of(context).size.width * 0.6,
                     ),
-            )
-          ],
-        ),
-      )),
+                    child: widgetList.isNotEmpty
+                        ? ListView(
+                            children: widgetList,
+                          )
+                        : Image.asset(
+                            'assets/Images/book.png',
+                            scale: 1.5,
+                            width: MediaQuery.of(context).size.width * 0.4,
+                          ),
+                  )
+
+            ],
+          )
     );
   }
 }
+//test@test.com
