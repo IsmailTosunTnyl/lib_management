@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 // import cloud_firestore plugin
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:lib_management/widgets/MainDrawer.dart';
 import 'bookPage.dart';
 import 'package:lib_management/model/desk.dart';
@@ -27,7 +28,7 @@ class _MainPageState extends State<MainPage> {
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
-        
+
         primarySwatch: Colors.blue,
       ),
       home: FutureBuilder(
@@ -131,7 +132,7 @@ class _MainsPageContentState extends State<MainsPageContent> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(54, 33, 149, 243),
+        backgroundColor: Color.fromARGB(255, 79, 104, 155),
         title: Text(widget.title),
       ),
       drawer: MainDrawer(PageChange: PageChange),

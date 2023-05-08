@@ -197,7 +197,7 @@ void _openBookDetails(BuildContext context, Book book) {
                                 style: ElevatedButton.styleFrom(
                                   elevation: 10,
                                   primary:
-                                      const Color.fromARGB(255, 155, 215, 33),
+                                      const Color.fromARGB(255, 149, 209, 204),
                                   onPrimary: Colors.white,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(15),

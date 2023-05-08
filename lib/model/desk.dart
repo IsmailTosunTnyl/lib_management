@@ -202,6 +202,12 @@ void _deskDetails(BuildContext context, Desk desk) async {
               ),
               // build rezervation add button
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    primary: Color.fromARGB(255, 79, 104, 155),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
+                    textStyle: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold)),
                 onPressed: () =>
                     _makerezervation(context, rezervationsList, desk),
                 child: Text("Make Rezervation"),

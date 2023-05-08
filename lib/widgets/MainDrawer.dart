@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:hexcolor/hexcolor.dart';
 
 class MainDrawer extends StatefulWidget {
   final Function(String v) PageChange;
@@ -44,8 +44,10 @@ class _MainDrawerState extends State<MainDrawer> {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    Colors.blue,
-                    Color.fromARGB(255, 3, 164, 97),
+                    Color.fromARGB(255, 246, 242, 212),
+                    Color.fromARGB(255, 149, 209, 204),
+                    Color.fromARGB(255, 85, 132, 172),
+                    Color.fromARGB(255, 79, 104, 155),
                   ],
                 ),
               ),
