@@ -59,7 +59,7 @@ void _makerezervation(BuildContext context, var rezervationsList, Desk desk) {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      icon: Icon(Icons.warning, color: Colors.red),
+                      icon: const Icon(Icons.warning, color: Colors.red),
                       title: const Text("Warning",
                           style: TextStyle(
                               color: Colors.red,
@@ -103,7 +103,7 @@ void _makerezervation(BuildContext context, var rezervationsList, Desk desk) {
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    icon: Icon(Icons.check, color: Colors.green),
+                    icon: const Icon(Icons.check, color: Colors.green),
                     title: const Text("Success",
                         style: TextStyle(
                             color: Colors.green,
@@ -186,16 +186,30 @@ void _deskDetails(BuildContext context, Desk desk) async {
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: desk.isAvailable ? Colors.green : Colors.red,
+                  color: desk.isAvailable
+                      ? Colors.green
+                      : desk.isUserHere
+                          ? Colors.red
+                          : const Color.fromRGBO(252, 177, 4, 1),
                   border: Border.all(color: Colors.black, width: 2),
                 ),
                 width: double.infinity,
                 height: deviceHeight * 0.1,
                 margin: const EdgeInsetsDirectional.symmetric(horizontal: 10),
-                child: const Icon(
-                  Icons.people_alt_outlined,
-                  size: 50,
-                ),
+                child: desk.isAvailable
+                    ? const Icon(
+                        Icons.people_alt_outlined,
+                        size: 50,
+                      )
+                    : desk.isUserHere
+                        ? const Icon(
+                            Icons.people_alt_outlined,
+                            size: 50,
+                          )
+                        : const Icon(
+                            Icons.air,
+                            size: 50,
+                          ),
               ),
               const SizedBox(
                 height: 10,
@@ -203,14 +217,14 @@ void _deskDetails(BuildContext context, Desk desk) async {
               // build rezervation add button
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    primary: Color.fromARGB(255, 79, 104, 155),
+                    primary: const Color.fromARGB(255, 79, 104, 155),
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 10),
                     textStyle: const TextStyle(
                         fontSize: 20, fontWeight: FontWeight.bold)),
                 onPressed: () =>
                     _makerezervation(context, rezervationsList, desk),
-                child: Text("Make Rezervation"),
+                child: const Text("Make Rezervation"),
               ),
               Expanded(
                   child: Column(children: [
@@ -220,7 +234,7 @@ void _deskDetails(BuildContext context, Desk desk) async {
                 ),
                 Expanded(
                   child: rezervationsList.docs.length <= 0
-                      ? Text("No Future Rezervation")
+                      ? const Text("No Future Rezervation")
                       : ListView.builder(
                           itemCount: rezervationsList.docs.length,
                           itemBuilder: (context, index) {
@@ -315,11 +329,25 @@ class _DeskWidgetState extends State<DeskWidget> {
                 Container(
                   width: double.infinity,
                   margin: const EdgeInsetsDirectional.symmetric(horizontal: 10),
-                  color: widget.desk.isAvailable ? Colors.green : Colors.red,
-                  child: const Icon(
-                    Icons.people_alt_outlined,
-                    size: 50,
-                  ),
+                  color: widget.desk.isAvailable
+                      ? Colors.green
+                      : widget.desk.isUserHere
+                          ? Colors.red
+                          : const Color.fromRGBO(252, 177, 4, 1),
+                  child: widget.desk.isAvailable
+                      ? const Icon(
+                          Icons.people_alt_outlined,
+                          size: 50,
+                        )
+                      : widget.desk.isUserHere
+                          ? const Icon(
+                              Icons.people_alt_outlined,
+                              size: 50,
+                            )
+                          : const Icon(
+                              Icons.air,
+                              size: 50,
+                            ),
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(8, 5, 8, 5),
@@ -327,10 +355,10 @@ class _DeskWidgetState extends State<DeskWidget> {
                     children: widget.desk.isAvailable
                         ? [
                             const Icon(Icons.check_circle),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
-                            Flexible(child: Text("Desk Available")),
+                            const Flexible(child: Text("Desk Available")),
                           ]
                         : [
                             const Icon(Icons.timelapse_sharp),
@@ -338,9 +366,9 @@ class _DeskWidgetState extends State<DeskWidget> {
                                 builder: (BuildContext context,
                                     AsyncSnapshot<QuerySnapshot> snapshot) {
                                   if (snapshot.hasError) {
-                                    return Flexible(
+                                    return const Flexible(
                                         child:
-                                            const Text('Something went wrong'));
+                                            Text('Something went wrong'));
                                   }
 
                                   if (snapshot.connectionState ==

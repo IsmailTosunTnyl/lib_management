@@ -94,6 +94,12 @@ class _MainDrawerState extends State<MainDrawer> {
               onTap: () {
                 widget.PageChange("BookAIPage");
                 Navigator.pop(context);
+              }),ListTile(
+              leading: Icon(Icons.adb_outlined),
+              title: Text("Profile"),
+              onTap: () {
+                widget.PageChange("ProfilePage");
+                Navigator.pop(context);
               }),
         ],
       )),

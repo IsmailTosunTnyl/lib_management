@@ -90,7 +90,8 @@ void _getbook(BuildContext context, Book book) async {
           'user': user,
           'book': bookref,
           'date': DateTime.now(),
-          'returnDate': date
+          'returnDate': date,
+          'isReturned': false,
         });
 
         bookref.update({'available': book.booksAvailable - 1});
