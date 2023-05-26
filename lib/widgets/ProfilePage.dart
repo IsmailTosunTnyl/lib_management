@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lib_management/model/mybooks.dart';
+import 'package:lib_management/model/mydesks.dart';
 
 class ProfilePage extends StatefulWidget {
   final BuildContext context;
@@ -20,7 +21,7 @@ class _ProfilePageState extends State<ProfilePage> {
             Container(
                 height: 500, width: mediaQuery.size.width, child: MyBooks()),
             Container(
-                height: 500, width: mediaQuery.size.width, child: MyBooks()),
+                height: 500, width: mediaQuery.size.width, child: MyDesks()),
           ],
         ));
   }
