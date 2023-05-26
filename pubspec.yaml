@@ -44,6 +44,14 @@ dependencies:
   hexcolor: ^3.0.1
   flutter_datetime_picker: ^1.5.1
   chat_gpt_sdk: ^2.1.2
+  intl: ^0.18.1
+  syncfusion_flutter_charts: ^20.2.6
+
+
+
+ 
+
+ 
  
 
 dev_dependencies:
@@ -72,6 +80,7 @@ flutter:
   assets:
     - assets/Images/
     - assets/Images/plants2.png
+    - assets/Images/plants.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
