@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 // import firebase_core plugin
 import 'package:firebase_core/firebase_core.dart';
@@ -131,6 +132,16 @@ class _MainsPageContentState extends State<MainsPageContent> {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseMessaging.instance.getToken().then((token) {
+      FirebaseFirestore.instance
+          .collection('Users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .update({"token": token});
+    });
+
+  
+
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 79, 104, 155),
@@ -145,11 +156,13 @@ class _MainsPageContentState extends State<MainsPageContent> {
               ? DeskPage(
                   context: context,
                 )
-              : _page == "BookAIPage" ? BookAIPage(
-                  context: context,
-                ): ProfilePage(
-                  context: context,
-                ) ,
+              : _page == "BookAIPage"
+                  ? BookAIPage(
+                      context: context,
+                    )
+                  : ProfilePage(
+                      context: context,
+                    ),
 
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,

@@ -46,6 +46,8 @@ dependencies:
   chat_gpt_sdk: ^2.1.2
   intl: ^0.18.1
   syncfusion_flutter_charts: ^20.2.6
+  firebase_messaging: ^14.6.1
+  flutter_launcher_icons: ^0.13.1
 
 
 
@@ -64,6 +66,13 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/Images/logo_la.png"
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
