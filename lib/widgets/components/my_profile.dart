@@ -68,7 +68,7 @@ class _ProfilePageHeaderState extends State<ProfilePageHeader> {
                         fontSize: 15,
                         fontWeight: FontWeight.w400)),
                 const SizedBox(height: 1),
-                Text("Penalty: ${widget.penalty}",
+                Text("Karma: ${widget.penalty}",
                     style: const TextStyle(
                         color: Colors.white,
                         fontSize: 15,

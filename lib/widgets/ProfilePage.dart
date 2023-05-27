@@ -27,7 +27,11 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Row(
             children: [
               Container(
-                  height: 500, width: mediaQuery.size.width, child: MyBooks()),
+                  height: 500,
+                  width: mediaQuery.size.width,
+                  child: MyBooks(
+                    context: context,
+                  )),
               Container(
                   height: 500, width: mediaQuery.size.width, child: MyDesks()),
             ],

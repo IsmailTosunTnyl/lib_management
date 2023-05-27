@@ -6,7 +6,8 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 class MyBooks extends StatefulWidget {
-  MyBooks({Key? key}) : super(key: key);
+  BuildContext context;
+  MyBooks({Key? key, required this.context}) : super(key: key);
 
   // create a map for stroe month and total page read
   Map<String, int> monthData = {};
@@ -134,9 +135,13 @@ class _MyBooksState extends State<MyBooks> {
                                   // if book is overdue, add 1 to user's penalty
                                   // get time difference between return date and current date
 
-                                  int difference = DateTime.now()
-                                      .difference(data['returnDate'].toDate())
+                                  int difference = data['returnDate']
+                                      .toDate()
+                                      .difference(DateTime.now())
                                       .inDays;
+                                  print(difference);
+                                  //difference = difference * -1;
+                                  print('difference: $difference');
                                   print(difference);
                                   FirebaseFirestore.instance
                                       .collection('Users')
@@ -156,7 +161,7 @@ class _MyBooksState extends State<MyBooks> {
                                     int penalty = value.data()!['penalty'];
 
                                     showDialog(
-                                        context: context,
+                                        context: widget.context,
                                         builder: (BuildContext context) {
                                           return AlertDialog(
                                             title: const Text('Penalty'),
@@ -174,7 +179,7 @@ class _MyBooksState extends State<MyBooks> {
                                                             width: 10),
                                                         Flexible(
                                                           child: Text(
-                                                              'You have been charged with ${difference} Point of penalty.'),
+                                                              'You have been charged with ${difference.abs()} Point of penalty.'),
                                                         ),
                                                         // show total penalty
                                                       ],
@@ -233,6 +238,63 @@ class _MyBooksState extends State<MyBooks> {
                                   });
 
                                   // show dialog with penalty with icon
+                                } else {
+                                  FirebaseFirestore.instance
+                                      .collection('Users')
+                                      .doc(FirebaseAuth
+                                          .instance.currentUser!.uid)
+                                      .update({
+                                    'penalty': FieldValue.increment(10)
+                                  });
+
+                                  // show a dialog to congratulate user for returning book on time
+
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: const Text('Congratulations!'),
+                                          content: SizedBox(
+                                            height: 65,
+                                            child: Center(
+                                              child: Column(
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      const Icon(
+                                                          Icons
+                                                              .check_circle_outline,
+                                                          color: Colors.green),
+                                                      const SizedBox(width: 10),
+                                                      Flexible(
+                                                        child: Text(
+                                                            'You have returned the book on time.'),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  const SizedBox(height: 10),
+                                                  Flexible(
+                                                    child: Text(
+                                                      'Your karma has increased.',
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w200,
+                                                          fontSize: 14),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          actions: [
+                                            TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: const Text('OK'))
+                                          ],
+                                        );
+                                      });
                                 }
 
                                 data['book'].update({
@@ -281,7 +343,6 @@ class _MyBooksState extends State<MyBooks> {
                 Map<String, dynamic> data = e.data()! as Map<String, dynamic>;
                 return data;
               }).toList();
-              print(data);
 
               // List to store the Future objects returned by book.get()
               List<Future<void>> bookFutures = [];
@@ -303,8 +364,6 @@ class _MyBooksState extends State<MyBooks> {
                             .format(element['date'].toDate())] =
                         data2['pagecount'] as int;
                   }
-
-                  print(widget.monthData);
                 });
 
                 bookFutures.add(future);
@@ -321,7 +380,7 @@ class _MyBooksState extends State<MyBooks> {
                     widget.monthData.forEach((key, value) {
                       pieData.add(_pydata(key, value));
                     });
-                    print(pieData);
+
                     return SfCircularChart(
                       title: ChartTitle(text: 'Pages readed by month'),
                       legend: Legend(isVisible: true),
