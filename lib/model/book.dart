@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+
 
 class Book {
   final String title;
@@ -189,7 +192,7 @@ void _openBookDetails(BuildContext context, Book book) {
                     ),
                   ),
                   Expanded(
-                    flex: 5,
+                    flex: 8,
                     child: Container(
 
                         //color: Colors.yellow,
@@ -214,21 +217,96 @@ void _openBookDetails(BuildContext context, Book book) {
                                 ))
                             : Column(
                                 children: [
-                                  const Text(
-                                    textAlign: TextAlign.center,
-                                    "No Books Available ",
-                                    style: TextStyle(
-                                        color: Colors.red,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold),
+                                  // Icon button for wishlist in heart shape
+
+                                  // add to wishlist button
+                                  ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        elevation: 10,
+                                        primary: Colors.red,
+                                        onPrimary: Colors.white,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        // add to wishlist
+
+                                        var user = FirebaseFirestore.instance
+                                            .collection('Users')
+                                            .doc(FirebaseAuth
+                                                .instance.currentUser!.uid);
+                                        var bookref = FirebaseFirestore.instance
+                                            .collection('Books')
+                                            .doc(book.title);
+
+                                        FirebaseFirestore.instance
+                                            .collection('BookWishlist')
+                                            .add({
+                                          'user': user,
+                                          'book': bookref,
+                                          'date': DateTime.now(),
+                                        });
+                                        
+                                        // show alert
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                title: const Text(
+                                                    "Book Added to Wishlist"),
+                                                icon: const Icon(Icons.check_circle,
+                                                    color: Colors.green,
+                                                    size: 50),
+                                                content: const Text(
+                                                  "You can see your wishlist in profile page",
+                                                  style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w200),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                                actions: [
+                                                  TextButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                      child: const Text("OK"))
+                                                ],
+                                              );
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            });
+                                      },
+                                      child: const Text(
+                                        "Add to Wishlist",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 15),
+                                      )),
+
+                                  const SizedBox(
+                                    height: 2,
                                   ),
-                                  SizedBox(
-                                    height: 4,
-                                  ),
-                                  Text("Avaliable date: " +
-                                      (DateFormat.yMMMd()
-                                              .format(book.availableDate))
-                                          .toString())
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(
+                                        Icons.date_range,
+                                        color: Colors.blue,
+                                      ),
+                                      Text("Avaliable date: " +
+                                          (DateFormat.yMMMd()
+                                                  .format(book.availableDate))
+                                              .toString()),
+                                    ],
+                                  )
                                 ],
                               )),
                   ),

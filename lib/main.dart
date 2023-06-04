@@ -124,4 +124,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-//cd android && ./gradlew clean 
+//cd android && ./gradlew clean && cd ..

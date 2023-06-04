@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -115,16 +116,36 @@ class _MyDesksState extends State<MyDesks> {
                             trailing: TextButton(
                               onPressed: () {
                                 // move to history
-                                FirebaseFirestore.instance
-                                    .collection('RezervataionHistory')
-                                    .doc(document.id)
-                                    .set({
-                                  'user': data['user'],
-                                  'desk': data['desk'],
-                                  'isstart': data['isstart'],
-                                  'isend': data['isend'],
-                                  'starttime': data['starttime'],
-                                  'endtime': data['endtime'],
+                                if (data['isstart']) {
+                                  FirebaseFirestore.instance
+                                      .collection('RezervataionHistory')
+                                      .doc(document.id)
+                                      .set({
+                                    'user': data['user'],
+                                    'desk': data['desk'],
+                                    'isstart': data['isstart'],
+                                    'isend': true,
+                                    'starttime': data['starttime'],
+                                    'endtime': DateTime.now(),
+                                  });
+                                } else {
+                                  FirebaseFirestore.instance
+                                      .collection('RezervataionHistory')
+                                      .doc(document.id)
+                                      .set({
+                                    'user': data['user'],
+                                    'desk': data['desk'],
+                                    'isstart': data['isstart'],
+                                    'isend': data['isend'],
+                                    'starttime': data['starttime'],
+                                    'endtime': data['endtime'],
+                                  });
+                                }
+
+                                // reset desk
+                                data['desk'].update({
+                                  'isAvailable': true,
+                                  'isUserHere': false,
                                 });
 
                                 FirebaseFirestore.instance
