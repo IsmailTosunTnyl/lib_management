@@ -305,12 +305,13 @@ class _MyBooksState extends State<MyBooks> {
                                     .doc(document.id)
                                     .delete();
 //
-                                ScaffoldMessenger.of(context)
+                                /* ScaffoldMessenger.of(context)
                                     .showSnackBar(const SnackBar(
                                   backgroundColor:
                                       Color.fromARGB(255, 79, 104, 155),
                                   content: Text("Book returned!"),
-                                ));
+                                ));*/
+                                
                                 setState(() {
                                   // refresh page
                                   widget.monthData.clear();
