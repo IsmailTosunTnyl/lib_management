@@ -9,6 +9,7 @@ class MyTextField extends StatelessWidget {
   final String hintText;
   final bool obscureText;
   final Icon prefixIcon;
+  final String keytext;
   final Function()? onChanged;
 
   const MyTextField(
@@ -17,11 +18,13 @@ class MyTextField extends StatelessWidget {
       required this.hintText,
       required this.obscureText,
       required this.prefixIcon,
+      required this.keytext,
       this.onChanged});
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+       key:  Key(keytext),
       controller: controller,
       obscureText: obscureText,
       cursorColor: HexColor("#4f4f4f"),

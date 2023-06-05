@@ -8,7 +8,6 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-
 class Book {
   final String title;
   final String author;
@@ -192,29 +191,33 @@ void _openBookDetails(BuildContext context, Book book) {
                     ),
                   ),
                   Expanded(
-                    flex: 8,
+                    flex: 6,
                     child: Container(
 
                         //color: Colors.yellow,
                         child: book.booksAvailable > 0
-                            ? ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  elevation: 10,
-                                  primary:
-                                      const Color.fromARGB(255, 149, 209, 204),
-                                  onPrimary: Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                ),
-                                onPressed: () {
-                                  _getbook(context, book);
-                                },
-                                child: const Text(
-                                  "Get Book",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 20),
-                                ))
+                            ? SizedBox(
+                                width: 120,
+                                height: 40,
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      elevation: 10,
+                                      primary: const Color.fromARGB(
+                                          255, 149, 209, 204),
+                                      onPrimary: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      _getbook(context, book);
+                                    },
+                                    child: const Text(
+                                      "Get Book",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 20),
+                                    )),
+                              )
                             : Column(
                                 children: [
                                   // Icon button for wishlist in heart shape
@@ -248,7 +251,7 @@ void _openBookDetails(BuildContext context, Book book) {
                                           'book': bookref,
                                           'date': DateTime.now(),
                                         });
-                                        
+
                                         // show alert
                                         showDialog(
                                             context: context,
@@ -256,7 +259,8 @@ void _openBookDetails(BuildContext context, Book book) {
                                               return AlertDialog(
                                                 title: const Text(
                                                     "Book Added to Wishlist"),
-                                                icon: const Icon(Icons.check_circle,
+                                                icon: const Icon(
+                                                    Icons.check_circle,
                                                     color: Colors.green,
                                                     size: 50),
                                                 content: const Text(
@@ -276,13 +280,6 @@ void _openBookDetails(BuildContext context, Book book) {
                                                       child: const Text("OK"))
                                                 ],
                                               );
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             });
                                       },
                                       child: const Text(
@@ -377,12 +374,13 @@ class _BookWidgetState extends State<BookWidget> {
                   ),
                   //title
                   Expanded(
-                    flex: 6,
+                    flex: 4,
                     child: Container(
                       width: double.infinity,
                       //color: Colors.green,
                       child: Text(
                         widget.book.title,
+                        overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
@@ -394,7 +392,7 @@ class _BookWidgetState extends State<BookWidget> {
                   ),
                   //author
                   Expanded(
-                    flex: 5,
+                    flex: 4,
                     child: Container(
                       width: double.infinity,
                       //color: Colors.yellow,
@@ -411,7 +409,7 @@ class _BookWidgetState extends State<BookWidget> {
                   ),
                   // books available
                   Expanded(
-                    flex: 3,
+                    flex: 4,
                     child: Container(
                         width: double.infinity,
                         //color: Colors.orange,
@@ -438,7 +436,7 @@ class _BookWidgetState extends State<BookWidget> {
                   ),
                   // book seller
                   Expanded(
-                    flex: 2,
+                    flex: 3,
                     child: Container(
                       width: double.infinity,
                       //color: Colors.purple,

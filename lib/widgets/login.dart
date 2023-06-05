@@ -131,6 +131,7 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
                                     height: 10,
                                   ),
                                   MyTextField(
+                                    keytext: "email",
                                     onChanged: (() {
                                       validateEmail(emailController.text);
                                     }),
@@ -164,6 +165,7 @@ class _LoginBodyScreenState extends State<LoginBodyScreen> {
                                     height: 10,
                                   ),
                                   MyTextField(
+                                    keytext: "password",
                                     controller: passwordController,
                                     hintText: "**************",
                                     obscureText: true,

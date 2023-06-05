@@ -179,6 +179,7 @@ class _BookAIPageState extends State<BookAIPage> {
                           right: 0,
                           bottom: 80,
                           child: MyTextField(
+                            keytext: "search",
                             controller: inputcontroller,
                             hintText: "Describe what do you want to read",
                             obscureText: false,
@@ -239,6 +240,7 @@ class _BookAIPageState extends State<BookAIPage> {
                             right: 0,
                             bottom: 80,
                             child: MyTextField(
+                              keytext: "search",
                               controller: inputcontroller,
                               hintText: "Describe what do you want to read",
                               obscureText: false,
