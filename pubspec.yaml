@@ -48,6 +48,7 @@ dependencies:
   syncfusion_flutter_charts: ^20.2.6
   firebase_messaging: ^14.6.1
   flutter_launcher_icons: ^0.13.1
+  fake_cloud_firestore: ^2.4.1+1
 
 
 

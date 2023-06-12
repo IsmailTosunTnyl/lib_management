@@ -7,7 +7,8 @@ class ProfilePageHeader extends StatefulWidget {
   String username = "";
   String email = "";
   String penalty = "";
-  ProfilePageHeader({Key? key, required this.context}) : super(key: key);
+  double pageheight = 0;
+  ProfilePageHeader({Key? key, required this.context,required this.pageheight}) : super(key: key);
 
   @override
   State<ProfilePageHeader> createState() => _ProfilePageHeaderState();
@@ -29,7 +30,7 @@ class _ProfilePageHeaderState extends State<ProfilePageHeader> {
             });
     var mediaQuery = MediaQuery.of(context);
     return Container(
-        height: 100,
+        height: widget.pageheight,
         width: mediaQuery.size.width,
         color: const Color.fromARGB(255, 79, 104, 155),
         child: Stack(

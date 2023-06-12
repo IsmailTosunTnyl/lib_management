@@ -191,32 +191,38 @@ void _openBookDetails(BuildContext context, Book book) {
                     ),
                   ),
                   Expanded(
-                    flex: 6,
+                    flex: 9,
                     child: Container(
 
                         //color: Colors.yellow,
                         child: book.booksAvailable > 0
                             ? SizedBox(
                                 width: 120,
-                                height: 40,
-                                child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      elevation: 10,
-                                      primary: const Color.fromARGB(
-                                          255, 149, 209, 204),
-                                      onPrimary: Colors.white,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      _getbook(context, book);
-                                    },
-                                    child: const Text(
-                                      "Get Book",
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 20),
-                                    )),
+                                height: 80,
+                                child: Column(
+                                  children: [
+                                    ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          elevation: 10,
+                                          primary: const Color.fromARGB(
+                                              255, 149, 209, 204),
+                                          onPrimary: Colors.white,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          _getbook(context, book);
+                                        },
+                                        child: const Text(
+                                          "Get Book",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 15),
+                                        )),
+                                  ],
+                                ),
                               )
                             : Column(
                                 children: [
@@ -285,7 +291,7 @@ void _openBookDetails(BuildContext context, Book book) {
                                       child: const Text(
                                         "Add to Wishlist",
                                         style: TextStyle(
-                                            color: Colors.white, fontSize: 15),
+                                            color: Colors.white, fontSize: 12),
                                       )),
 
                                   const SizedBox(
@@ -308,7 +314,7 @@ void _openBookDetails(BuildContext context, Book book) {
                               )),
                   ),
                   Expanded(
-                    flex: 3,
+                    flex: 4,
                     child: Align(
                       alignment: Alignment.bottomRight,
                       child: TextButton(
