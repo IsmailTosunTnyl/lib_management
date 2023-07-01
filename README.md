@@ -65,4 +65,4 @@ Please refer to the individual files in the repository for more details and spec
 
 Special thanks to the creators and maintainers of the ChatGPT API, Firebase, and the RFID reader integration with Raspberry Pi. Their contributions have made this library management and desk reservation tool possible.
 
-If you have any questions or suggestions, please feel free to contact us at [email@example.com](mailto:email@example.com). We appreciate your feedback!
+If you have any questions or suggestions, please feel free to contact us at [ismailtosuntnly@gmail.com](mailto:ismailtosuntnly@gmail.com). We appreciate your feedback!
