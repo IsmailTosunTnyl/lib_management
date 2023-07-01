@@ -25,6 +25,7 @@ Before running the project, ensure that you have the following installed:
 
 - Flutter SDK
 - Dart SDK
+- Firebase Connection
 - Android Studio / Xcode (for running on a physical device)
 - Emulator / Simulator (for running on a virtual device)
 
@@ -41,7 +42,7 @@ To run the project, follow these steps:
 2. Navigate to the project directory:
 
    ```shell
-   cd library-management-tool
+   cd lib_management
    ```
 
 3. Install the dependencies:
