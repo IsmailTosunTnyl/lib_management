@@ -4,6 +4,21 @@ This repository contains a Flutter project for a library management and desk res
 
 Additionally, the tool facilitates desk reservations, providing information on desk availability, allowing users to make desk reservations, and offering features such as reservation details and personal study and reading statistics with charts. The tool includes a desk prototype with an RFID reader that utilizes a Raspberry Pi to communicate with Firebase. This setup enables real-time detection of whether a user is currently using a desk and automatically cancels reservations if a user fails to utilize their reservation within a specified timeframe, resulting in a karma penalty.
 
+## Screenshots
+
+<div align="center">
+  <img src="screenshots/desk3.png" alt="Screenshot 1" width="200" />
+  <img src="screenshots/desk2.png" alt="Screenshot 2" width="200" />
+   <img src="screenshots/notifiacation.png" alt="Screenshot 3" width="200" />
+  <img src="screenshots/profile.png" alt="Screenshot 4" width="200" />
+</div>
+<div align="center">
+  <img src="screenshots/all.png" alt="Screenshot 1" width="800" />
+  <img src="screenshots/alldevices2.png" alt="Screenshot 2" width="800" />
+
+</div>
+
+
 ## Prerequisites
 
 Before running the project, ensure that you have the following installed:
